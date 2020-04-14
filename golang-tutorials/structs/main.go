@@ -11,6 +11,7 @@ type person struct {
 	firstName string
 	lastName  string
 	contact   contactInfo
+	// Another way is to just use 'contactInfo' which is equivalent to 'contactInfo contactInfo'
 }
 
 func main() {
@@ -37,6 +38,9 @@ func main() {
 		},
 	}
 
-	fmt.Printf("%+v", jim)
+	jim.print()
+}
 
+func (p person) print() {
+	fmt.Printf("%+v", p)
 }
