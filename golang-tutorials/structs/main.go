@@ -39,6 +39,23 @@ func main() {
 	}
 
 	jim.print()
+	// this assigns the memory address of jim to jimPointer
+	jimPointer := &jim
+	jimPointer.updateName("Jimmy")
+	// the below will still update the first name becasue the reciever is a pointer to person
+	//jim.updateName(Jimmy)
+
+	jim.print()
+}
+
+// Go is "Pass By Value"
+// Turn address into value with *address
+// Turn value into address with &value
+
+// *type  - this is a type declaration , it means we are working with a pointer to a person
+// *variable - this is an operator , it means we want to manipulate the value the pointer is referencing
+func (pointerToPerson *person) updateName(newFirstName string) {
+	(*pointerToPerson).firstName = newFirstName
 }
 
 func (p person) print() {
