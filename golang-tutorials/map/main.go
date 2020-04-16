@@ -22,4 +22,15 @@ func main() {
 
 	delete(colorsOne, "red")
 	fmt.Println(colorsOne)
+
+	colorsOne["red"] = "#ff0000"
+	colorsOne["white"] = "#ffffff"
+
+	printMap(colorsOne)
+}
+
+func printMap(m map[string]string) {
+	for color, hex := range m {
+		fmt.Println("Hex code for ", color, " is ", hex)
+	}
 }
