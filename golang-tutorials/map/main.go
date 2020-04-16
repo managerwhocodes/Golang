@@ -19,4 +19,7 @@ func main() {
 
 	colorsThree["white"] = "#ffffff"
 	fmt.Println(colorsThree)
+
+	delete(colorsOne, "red")
+	fmt.Println(colorsOne)
 }
