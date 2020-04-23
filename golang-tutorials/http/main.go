@@ -48,5 +48,8 @@ func main() {
 }
 
 func (logWriter) Write(bs []byte) (int, error) {
-	return 1, nil
+	// this will not print anything
+	//return 1, nil
+	fmt.Println(string(bs))
+	return len(bs), nil
 }
