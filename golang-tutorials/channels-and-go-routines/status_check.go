@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func main() {
+func statusCheck() {
 
 	links := []string{
 		"http://google.com",
@@ -18,36 +18,29 @@ func main() {
 	// channel implementation
 	c := make(chan string)
 
+	fmt.Println("Status Check Starts : -----------------")
+
 	for _, link := range links {
 		// this will create Go Routine
-		go checkLink(link, c)
+		go statusCheckLink(link, c)
 	}
 
-	// this will wait till main routine gets a message from channel
-	// after that main routine with exit
-	fmt.Println(<-c)
-
-	// efficient way of receiving messages
-	// the counter starts from 1 and not 0 because we have used one print startement above
-	for i := 1; i < len(links); i++ {
-		fmt.Println(<-c)
+	// infinte loop
+	for {
+		go statusCheckLink(<-c, c)
 	}
-
-	// call status check
-	statusCheck()
-
 }
 
-func checkLink(link string, c chan string) {
+func statusCheckLink(link string, c chan string) {
 	_, err := http.Get(link)
 	if err != nil {
 		fmt.Println(link, "error occured accessing the link")
 		// passing message to channel
-		c <- "Some is wrong !"
+		c <- link
 		return
 	}
 
 	fmt.Println(link, "is accessible")
 	// passing message to channel
-	c <- "Everything is fine !"
+	c <- link
 }
