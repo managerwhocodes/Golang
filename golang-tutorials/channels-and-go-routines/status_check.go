@@ -26,9 +26,17 @@ func statusCheck() {
 	}
 
 	// infinte loop
-	for {
-		go statusCheckLink(<-c, c)
+	/*
+		for {
+			go statusCheckLink(<-c, c)
+		}
+	*/
+
+	// alternate way of loop
+	for l := range c {
+		go statusCheckLink(l, c)
 	}
+
 }
 
 func statusCheckLink(link string, c chan string) {
