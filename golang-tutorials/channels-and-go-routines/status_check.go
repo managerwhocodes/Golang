@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func statusCheck() {
@@ -34,12 +35,18 @@ func statusCheck() {
 
 	// alternate way of loop
 	for l := range c {
-		go statusCheckLink(l, c)
+		// don't add sleep here , doing so will block the main routine for this time
+		// use function literal
+		go func(link string) {
+			time.Sleep(2 * time.Second)
+			statusCheckLink(link, c)
+		}(l) // this is used to invoke the function literal
 	}
 
 }
 
 func statusCheckLink(link string, c chan string) {
+	// adding sleep here is also not appropriate becasue this function is just use to check the link and return
 	_, err := http.Get(link)
 	if err != nil {
 		fmt.Println(link, "error occured accessing the link")
